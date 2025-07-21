@@ -1,0 +1,77 @@
+/* Navigation Component Styles */
+.navbar {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link.hover-effect {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link.hover-effect:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: whitefff !important;
+  transform: translateY(-1px);
+}
+
+.nav-link.hover-effect::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: whitefff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link.hover-effect:hover::after {
+  width: 80%;
+}
+
+/* Active state styles */
+.nav-link.bg-light.text-primary {
+  background-color: whitefff !important;
+  color: #0d6efd !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(13, 110, 253, 0.1);
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    padding-top: var(--font-size-base);
+  }
+  
+  .nav-link {
+    margin: 0.25rem 0 !important;
+    text-align: center;
+  }
+  
+  .nav-link.bg-light.text-primary {
+    margin: var(--spacing-xs) 0 !important;
+  }
+}
+
+/* Navbar toggler improvements */
+.navbar-toggler {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-xs) 0.75rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+/* Brand hover effect */
+.navbar-brand:hover {
+  color: whitefff !important;
+  text-decoration: none;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
