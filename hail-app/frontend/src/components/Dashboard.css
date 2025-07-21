@@ -1,0 +1,84 @@
+.dashboard-container {
+  background-color: #1a1a1a; /* Dark background */
+  color: #f0f0f0; /* Light text */
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.hero-section {
+  position: relative;
+  height: var(--font-weight-normal)px; /* Adjust as needed */
+  background: url('https://via.placeholder.com/1var(--font-weight-medium)xvar(--font-weight-normal)/333333/FFFFFF?text=Storm+Tracker+Hero') no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  border-radius: 15px; /* Rounded corners for the hero section */
+  overflow: hidden;
+  margin-bottom: 50px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Subtle shadow for the hero section */
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for prominence */
+}
+
+.hero-button {
+  background-color: var(--color-primary); /* Primary button color */
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: var(--line-height-heading)rem;
+  border-radius: 30px; /* More rounded button */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for button */
+}
+
+.hero-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.feature-card {
+  background-color: #2a2a2a; /* Darker background for cards */
+  color: #f0f0f0;
+  border: none;
+  border-radius: 15px; /* Rounded corners for cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for cards */
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 250px; /* Ensure consistent card height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.feature-icon {
+  font-size: 3rem; /* Adjust icon size */
+  margin-bottom: 15px;
+  color: var(--color-primary); /* Icon color */
+}
+
+.feature-card-title {
+  font-size: calc(var(--line-height-base) * var(--font-size-base));
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.feature-card-text {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
