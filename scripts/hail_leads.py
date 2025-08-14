@@ -27,6 +27,7 @@ EARTH_RADIUS_MILES = 3958.8
 
 @dataclass
 class HailReport:
+    """Represents a hail report with location, size, and time."""
     lat: float
     lon: float
     size: float
@@ -46,7 +47,7 @@ def haversine_distance_miles(lat1: float, lon1: float, lat2: float, lon2: float)
 def fetch_hail_reports(start: str, end: str) -> List[HailReport]:
     """Retrieve hail reports from NOAA's SWDI API."""
     url = f"https://www.ncdc.noaa.gov/swdiws/json/nx3hail/{start}:{end}"
-    resp = requests.get(url, timeout=60)
+    resp = requests.get(url, headers={"User-Agent": "hail-leads-script"}, timeout=60)
     resp.raise_for_status()
     data = resp.json()
     results = data.get("result", [])
@@ -56,8 +57,10 @@ def fetch_hail_reports(start: str, end: str) -> List[HailReport]:
         # SHAPE looks like "POINT (lon lat)"
         shape = row.get("SHAPE", "")
         try:
-            lon, lat = map(float, shape.strip("POINT ()").split())
-        except Exception:
+            lon_str, lat_str = shape.strip("POINT ()").split()
+            lon, lat = float(lon_str), float(lat_str)
+        except (ValueError, IndexError):
+            # Log this error for debugging if needed
             continue
         reports.append(HailReport(lat=lat, lon=lon, size=size, time=row.get("ZTIME", "")))
     return reports
@@ -75,11 +78,25 @@ def reverse_geocode(lat: float, lon: float) -> Optional[str]:
         resp.raise_for_status()
         data = resp.json()
         return data.get("display_name")
-    except Exception:
+    except (requests.exceptions.RequestException, json.JSONDecodeError):
+        # In a real application, you might want to log this error.
+        # print(f"Warning: Reverse geocode failed for {lat},{lon}: [error details]")
         return None
 
 
-def filter_reports(reports: Iterable[HailReport], min_size: float, radius_miles: float) -> List[HailReport]:
+def filter_reports(
+    reports: Iterable[HailReport], min_size: float, radius_miles: float
+) -> List[HailReport]:
+    """Filters hail reports based on minimum size and proximity to Milwaukee.
+
+    Args:
+        reports: An iterable of HailReport objects to filter.
+        min_size: The minimum hail size in inches to include in the filtered reports.
+        radius_miles: The maximum distance in miles from Milwaukee for reports to be included.
+
+    Returns:
+        A list of HailReport objects that meet the filtering criteria.
+    """
     filtered: List[HailReport] = []
     for r in reports:
         if r.size < min_size:
@@ -91,6 +108,7 @@ def filter_reports(reports: Iterable[HailReport], min_size: float, radius_miles:
 
 
 def main() -> None:
+    """Main function to fetch, filter, and display hail leads."""
     parser = argparse.ArgumentParser(description="Find hail leads near Milwaukee, WI")
     parser.add_argument("start", help="Start date in YYYYMMDD format")
     parser.add_argument("end", help="End date in YYYYMMDD format")
