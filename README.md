@@ -720,6 +720,12 @@ cd codex-cli
 echo "use flake ../flake.nix#codex-rs" >> .envrc && direnv allow
 ```
 
+## Example hail lead generation app
+
+A minimal demo lives in [`hail-app`](./hail-app). See the README in that
+directory for how to run the backend and frontend. The example lets you
+add leads and hail events from a simple web UI.
+
 ---
 
 ## Security & responsible AI
